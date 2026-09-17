@@ -1,0 +1,23 @@
+23:56:15.425139 IP6 ::1.48680 > ::1.8443: Flags [S], seq 2164117484, win 65476, options [mss 65476,sackOK,TS val 3902839771 ecr 0,nop,wscale 7], length 0
+23:56:15.425159 IP6 ::1.8443 > ::1.48680: Flags [S.], seq 2205161944, ack 2164117485, win 65464, options [mss 65476,sackOK,TS val 3902839771 ecr 3902839771,nop,wscale 7], length 0
+23:56:15.425176 IP6 ::1.48680 > ::1.8443: Flags [.], ack 1, win 512, options [nop,nop,TS val 3902839771 ecr 3902839771], length 0
+23:56:15.427567 IP6 ::1.48680 > ::1.8443: Flags [P.], seq 1:1570, ack 1, win 512, options [nop,nop,TS val 3902839773 ecr 3902839771], length 1569
+23:56:15.427595 IP6 ::1.8443 > ::1.48680: Flags [.], ack 1570, win 636, options [nop,nop,TS val 3902839773 ecr 3902839773], length 0
+23:56:15.428004 IP6 ::1.8443 > ::1.48680: Flags [P.], seq 1:1428, ack 1570, win 636, options [nop,nop,TS val 3902839774 ecr 3902839773], length 1427
+23:56:15.428039 IP6 ::1.48680 > ::1.8443: Flags [.], ack 1428, win 617, options [nop,nop,TS val 3902839774 ecr 3902839774], length 0
+23:56:15.429369 IP6 ::1.48680 > ::1.8443: Flags [P.], seq 1570:1634, ack 1428, win 617, options [nop,nop,TS val 3902839775 ecr 3902839774], length 64
+23:56:15.429537 IP6 ::1.8443 > ::1.48680: Flags [P.], seq 1428:1489, ack 1634, win 636, options [nop,nop,TS val 3902839775 ecr 3902839775], length 61
+23:56:15.429768 IP6 ::1.48680 > ::1.8443: Flags [P.], seq 1634:1765, ack 1489, win 617, options [nop,nop,TS val 3902839776 ecr 3902839775], length 131
+23:56:15.429885 IP6 ::1.8443 > ::1.48680: Flags [P.], seq 1489:1524, ack 1765, win 643, options [nop,nop,TS val 3902839776 ecr 3902839776], length 35
+23:56:15.429984 IP6 ::1.8443 > ::1.48680: Flags [P.], seq 1524:1555, ack 1765, win 643, options [nop,nop,TS val 3902839776 ecr 3902839776], length 31
+23:56:15.429998 IP6 ::1.48680 > ::1.8443: Flags [.], ack 1555, win 617, options [nop,nop,TS val 3902839776 ecr 3902839776], length 0
+23:56:15.430022 IP6 ::1.48680 > ::1.8443: Flags [P.], seq 1765:1822, ack 1555, win 617, options [nop,nop,TS val 3902839776 ecr 3902839776], length 57
+23:56:15.430698 IP6 ::1.8443 > ::1.48680: Flags [P.], seq 1555:1660, ack 1822, win 643, options [nop,nop,TS val 3902839777 ecr 3902839776], length 105
+23:56:15.430744 IP6 ::1.8443 > ::1.48680: Flags [P.], seq 1660:1717, ack 1822, win 643, options [nop,nop,TS val 3902839777 ecr 3902839776], length 57
+23:56:15.430872 IP6 ::1.48680 > ::1.8443: Flags [.], ack 1717, win 617, options [nop,nop,TS val 3902839777 ecr 3902839777], length 0
+23:56:15.430963 IP6 ::1.48680 > ::1.8443: Flags [P.], seq 1822:1870, ack 1717, win 617, options [nop,nop,TS val 3902839777 ecr 3902839777], length 48
+23:56:15.430993 IP6 ::1.48680 > ::1.8443: Flags [P.], seq 1870:1894, ack 1717, win 617, options [nop,nop,TS val 3902839777 ecr 3902839777], length 24
+23:56:15.431016 IP6 ::1.8443 > ::1.48680: Flags [.], ack 1894, win 643, options [nop,nop,TS val 3902839777 ecr 3902839777], length 0
+23:56:15.431067 IP6 ::1.48680 > ::1.8443: Flags [F.], seq 1894, ack 1717, win 617, options [nop,nop,TS val 3902839777 ecr 3902839777], length 0
+23:56:15.431144 IP6 ::1.8443 > ::1.48680: Flags [P.], seq 1717:1741, ack 1894, win 643, options [nop,nop,TS val 3902839777 ecr 3902839777], length 24
+23:56:15.431184 IP6 ::1.48680 > ::1.8443: Flags [R], seq 2164119378, win 0, length 0

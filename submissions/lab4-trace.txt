@@ -1,0 +1,120 @@
+=== ANNOTATION: POST /notes connection ===
+
+TCP three-way handshake:
+- 23:35:06.147610 — client ::1:40972 -> server ::1:8080, Flags [S]: SYN.
+- 23:35:06.147630 — server ::1:8080 -> client ::1:40972, Flags [S.]: SYN/ACK.
+- 23:35:06.147643 — client -> server, Flags [.]: final ACK.
+
+HTTP request:
+- 23:35:06.147793 — POST /notes HTTP/1.1.
+- Request JSON: {"title":"trace me","body":"in flight"}.
+
+HTTP response:
+- 23:35:06.160294 — HTTP/1.1 201 Created.
+- Response JSON contains created note with id 7.
+
+TCP connection close:
+- 23:35:06.160573 — client Flags [F.]: FIN/ACK.
+- 23:35:06.160669 — server Flags [F.]: FIN/ACK.
+- 23:35:06.160743 — client Flags [.]: final ACK.
+
+=== RAW TCPDUMP OUTPUT ===
+
+23:34:58.706690 IP6 ::1.40970 > ::1.8080: Flags [S], seq 3144232907, win 65476, options [mss 65476,sackOK,TS val 3901563052 ecr 0,nop,wscale 7], length 0
+`.N2.(.@.................................
+...i/..........0.........
+.. .........
+23:34:58.706714 IP6 ::1.8080 > ::1.40970: Flags [S.], seq 242511231, ack 3144232908, win 65464, options [mss 65476,sackOK,TS val 3901563053 ecr 3901563052,nop,wscale 7], length 0
+`
+...(.@...................................
+.tm..i/......0.........
+.. ... .....
+23:34:58.706731 IP6 ::1.40970 > ::1.8080: Flags [.], ack 1, win 512, options [nop,nop,TS val 3901563053 ecr 3901563053], length 0
+`.N2. .@.................................
+...i/..tm......(.....
+.. ... .
+23:34:58.707134 IP6 ::1.40970 > ::1.8080: Flags [P.], seq 1:85, ack 1, win 512, options [nop,nop,TS val 3901563053 ecr 3901563053], length 84: HTTP: GET /health HTTP/1.1
+`.N2.t.@.................................
+...i/..tm......|.....
+.. ... .GET /health HTTP/1.1
+Host: localhost:8080
+User-Agent: curl/8.18.0
+Accept: */*
+
+
+23:34:58.707162 IP6 ::1.8080 > ::1.40970: Flags [.], ack 85, win 511, options [nop,nop,TS val 3901563053 ecr 3901563053], length 0
+`
+... .@...................................
+.tm..i0 .....(.....
+.. ... .
+23:34:58.707454 IP6 ::1.8080 > ::1.40970: Flags [P.], seq 1:135, ack 85, win 512, options [nop,nop,TS val 3901563053 ecr 3901563053], length 134: HTTP: HTTP/1.1 200 OK
+`
+.....@...................................
+.tm..i0 ...........
+.. ... .HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Thu, 17 Sep 2026 20:34:58 GMT
+Content-Length: 26
+
+{"notes":6,"status":"ok"}
+
+23:34:58.707474 IP6 ::1.40970 > ::1.8080: Flags [.], ack 135, win 511, options [nop,nop,TS val 3901563053 ecr 3901563053], length 0
+`.N2. .@.................................
+...i0 .tn......(.....
+.. ... .
+23:34:58.707561 IP6 ::1.40970 > ::1.8080: Flags [F.], seq 85, ack 135, win 512, options [nop,nop,TS val 3901563053 ecr 3901563053], length 0
+`.N2. .@.................................
+...i0 .tn......(.....
+.. ... .
+23:34:58.707617 IP6 ::1.8080 > ::1.40970: Flags [F.], seq 135, ack 86, win 512, options [nop,nop,TS val 3901563053 ecr 3901563053], length 0
+`
+... .@...................................
+.tn..i0!.....(.....
+.. ... .
+23:34:58.707631 IP6 ::1.40970 > ::1.8080: Flags [.], ack 136, win 512, options [nop,nop,TS val 3901563053 ecr 3901563053], length 0
+`.N2. .@.................................
+...i0!.tn......(.....
+.. ... .
+23:35:06.147610 IP6 ::1.40972 > ::1.8080: Flags [S], seq 86273421, win 65476, options [mss 65476,sackOK,TS val 3901570493 ecr 0,nop,wscale 7], length 0
+`.<..(.@.....................................$m..........0.........
+..=.........
+23:35:06.147630 IP6 ::1.8080 > ::1.40972: Flags [S.], seq 2118797713, ack 86273422, win 65464, options [mss 65476,sackOK,TS val 3901570493 ecr 3901570493,nop,wscale 7], length 0
+`.N..(.@....................................~JI..$m......0.........
+..=...=.....
+23:35:06.147643 IP6 ::1.40972 > ::1.8080: Flags [.], ack 1, win 512, options [nop,nop,TS val 3901570493 ecr 3901570493], length 0
+`.<.. .@.....................................$m.~JI......(.....
+..=...=.
+23:35:06.147793 IP6 ::1.40972 > ::1.8080: Flags [P.], seq 1:176, ack 1, win 512, options [nop,nop,TS val 3901570494 ecr 3901570493], length 175: HTTP: POST /notes HTTP/1.1
+`.<....@.....................................$m.~JI............
+..=...=.POST /notes HTTP/1.1
+Host: localhost:8080
+User-Agent: curl/8.18.0
+Accept: */*
+Content-Type: application/json
+Content-Length: 39
+
+{"title":"trace me","body":"in flight"}
+23:35:06.147801 IP6 ::1.8080 > ::1.40972: Flags [.], ack 176, win 511, options [nop,nop,TS val 3901570494 ecr 3901570494], length 0
+`.N.. .@....................................~JI..$n=.....(.....
+..=...=.
+23:35:06.160294 IP6 ::1.8080 > ::1.40972: Flags [P.], seq 1:206, ack 176, win 512, options [nop,nop,TS val 3901570506 ecr 3901570494], length 205: HTTP: HTTP/1.1 201 Created
+`.N....@....................................~JI..$n=...........
+..=...=.HTTP/1.1 201 Created
+Content-Type: application/json
+Date: Thu, 17 Sep 2026 20:35:06 GMT
+Content-Length: 92
+
+{"id":7,"title":"trace me","body":"in flight","created_at":"2026-09-17T20:35:06.14822478Z"}
+
+23:35:06.160336 IP6 ::1.40972 > ::1.8080: Flags [.], ack 206, win 511, options [nop,nop,TS val 3901570506 ecr 3901570506], length 0
+`.<.. .@.....................................$n=~JJ_.....(.....
+..=...=.
+23:35:06.160573 IP6 ::1.40972 > ::1.8080: Flags [F.], seq 176, ack 206, win 512, options [nop,nop,TS val 3901570506 ecr 3901570506], length 0
+`.<.. .@.....................................$n=~JJ_.....(.....
+..=...=.
+23:35:06.160669 IP6 ::1.8080 > ::1.40972: Flags [F.], seq 206, ack 177, win 512, options [nop,nop,TS val 3901570506 ecr 3901570506], length 0
+`.N.. .@....................................~JJ_.$n>.....(.....
+..=...=.
+23:35:06.160743 IP6 ::1.40972 > ::1.8080: Flags [.], ack 207, win 512, options [nop,nop,TS val 3901570506 ecr 3901570506], length 0
+`.<.. .@.....................................$n>~JJ`.....(.....
+..=...=.
