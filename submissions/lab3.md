@@ -7,11 +7,13 @@ lets the required status check protect pull requests directly.
 
 ## Evidence
 
-- Green workflow run: **replace with the URL of the green Actions run**
-- Failed run: **replace with the URL or a screenshot of the deliberately failed run**
-- Fix commit: **replace with the URL/SHA of the follow-up fix commit**
-- Branch-protection screenshot: **add the screenshot here (or link it from the
-  repository)**
+- Green workflow run: [QuickNotes CI run #9](https://github.com/ttrlen/DevOps-Intro/actions/runs/35266014896)
+- Failed run: [deliberately failed QuickNotes CI run](https://github.com/ttrlen/DevOps-Intro/actions/runs/35261198794)
+- Fix commit: [`ec2660e`](https://github.com/ttrlen/DevOps-Intro/commit/ec2660e6d14d5927b2c3a3cffe27bf71e54fc3f2)
+- Technical CI PR: [PR #2](https://github.com/ttrlen/DevOps-Intro/pull/2)
+- Branch-protection screenshot:
+
+  ![Branch protection](branch-protection.jpg)
 
 ## Task 1 — design answers
 
@@ -88,6 +90,39 @@ contain secrets and restored content must be treated as untrusted. GitHub
 mitigates this by giving low-trust workflows read-only access to the default
 branch cache scope; PR-run caches are also scoped to their merge reference.
 See [GitHub's dependency-cache security documentation](https://docs.github.com/en/actions/concepts/workflows-and-actions/dependency-caching#cache-security).
+
+## Bonus Task — pipeline performance investigation
+
+The final full pipeline completed in **40 s**, so it meets the ≤90 s goal.
+The GitHub Actions run summary recorded a 15 s lint job and a 2 s `ci-ok`
+job; the matrix jobs ran in parallel. The remaining time is mostly GitHub-hosted
+runner allocation, checkout, and Go/tool setup rather than QuickNotes work.
+
+Additional optimizations applied beyond Task 2:
+
+1. `GOFLAGS=-buildvcs=false` avoids VCS metadata inspection during Go commands.
+2. The linter uses its release binary and its action cache, avoiding `go install`
+   and allowing its own cache to be restored between runs.
+3. A concurrency group cancels superseded CI runs for the same pull request,
+   avoiding work on obsolete commits.
+4. Vet, test, and lint use independent jobs and therefore run in parallel;
+   `ci-ok` waits only for their results.
+
+| Optimization applied | Before (s) | After (s) | Saving |
+|---|---:|---:|---:|
+| `GOFLAGS` and cached binary linter, full matrix run | 47 | 40 | -7 |
+| Lint job with restored linter cache | 21 | 15 | -6 |
+| Cancel superseded PR runs | N/A | N/A | avoids obsolete runs |
+| **Total wall-clock** | **47** | **40** | **-7** |
+
+Runner provisioning and tool setup dominate the remaining duration, while the
+QuickNotes checks themselves are small. To make the application work shorter,
+the project would need less test/analysis work or fewer supported Go versions,
+but that would reduce useful coverage rather than improve CI design. I would
+stop optimizing at roughly 40–45 seconds: the remaining variation comes from
+shared hosted infrastructure and the engineering effort is better spent on
+application changes. A dependency-heavy project would benefit much more from
+the dependency and linter caches than this zero-dependency project does.
 
 ## Manual checks still required
 
