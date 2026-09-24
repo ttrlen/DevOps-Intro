@@ -68,9 +68,9 @@ Restore timing:
 
 | Dimension | Vagrant VM | Docker container |
 |---|---:|---:|
-| Cold start | <!-- VM result --> | <!-- container result --> |
-| Idle RAM | <!-- VM result --> | <!-- container result --> |
-| On-disk size | <!-- VM result --> | <!-- image result --> |
-| Process count (guest) | <!-- VM result --> | <!-- container result --> |
+| Cold start | <!-- VM result --> | 0.282 s |
+| Idle RAM | <!-- VM result --> | 6.383 MiB |
+| On-disk size | <!-- VM result --> | 1.32 GB |
+| Process count (guest) | <!-- VM result --> | 2 |
 
 <!-- Write the final 4–5 sentence comparison after taking the four measurements. -->
