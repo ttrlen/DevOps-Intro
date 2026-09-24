@@ -11,25 +11,34 @@ The submitted [`Vagrantfile`](../Vagrantfile) uses the public `bento/ubuntu-24.0
 `vagrant up` (first 10 lines):
 
 ```text
-<!-- paste the real first 10 lines here -->
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Checking if box 'bento/ubuntu-24.04' version '202510.26.0' is up to date...
+==> default: Clearing any previously set forwarded ports...
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+==> default: Forwarding ports...
+    default: 8080 (guest) => 18080 (host) (adapter 1)
+    default: 22 (guest) => 2222 (host) (adapter 1)
+==> default: Running 'pre-boot' VM customizations...
 ```
 
 Go version inside the VM:
 
 ```text
-<!-- paste: vagrant ssh -c 'go version' -->
+go version go1.24.5 linux/amd64
 ```
 
 Health endpoint inside the VM:
 
 ```text
-<!-- paste: vagrant ssh -c 'curl -s http://127.0.0.1:8080/health' -->
+{"notes":4,"status":"ok"}
 ```
 
 Health endpoint from the host through the port forward:
 
 ```text
-<!-- paste: curl -s http://localhost:18080/health -->
+{"notes":4,"status":"ok"}
 ```
 
 ### Design answers
@@ -47,13 +56,30 @@ Health endpoint from the host through the port forward:
 ### Commands and evidence
 
 ```bash
-# commands and their real output will be added after the snapshot exercise
+vagrant snapshot save quicknotes-clean
+vagrant ssh -c "sudo rm -rf /usr/local/go"
+vagrant ssh -c "go version"
+# bash: line 1: go: command not found
+
+# VirtualBox 7.1 could not resume a live snapshot after Hyper-V was disabled,
+# so a clean disk-only snapshot was saved after a verified shutdown.
+vagrant halt
+vagrant snapshot save quicknotes-disk-clean
+vagrant up
+vagrant ssh -c "sudo rm -rf /usr/local/go"
+vagrant ssh -c "go version"
+# bash: line 1: go: command not found
+powershell -NoProfile -Command "Measure-Command { vagrant snapshot restore quicknotes-disk-clean }"
+vagrant ssh -c "go version"
+# go version go1.24.5 linux/amd64
 ```
 
 Restore timing:
 
 ```text
-<!-- paste real `time vagrant snapshot restore quicknotes-clean` output here -->
+Seconds           : 48
+Milliseconds      : 403
+TotalSeconds      : 48.4038065
 ```
 
 ### Design answers
@@ -68,9 +94,9 @@ Restore timing:
 
 | Dimension | Vagrant VM | Docker container |
 |---|---:|---:|
-| Cold start | <!-- VM result --> | 0.282 s |
-| Idle RAM | <!-- VM result --> | 6.383 MiB |
-| On-disk size | <!-- VM result --> | 1.32 GB |
-| Process count (guest) | <!-- VM result --> | 2 |
+| Cold start | 75.809 s | 0.282 s |
+| Idle RAM | 313 MiB used | 6.383 MiB |
+| On-disk size | 3.35 GB | 1.32 GB |
+| Process count (guest) | 149 | 2 |
 
-<!-- Write the final 4–5 sentence comparison after taking the four measurements. -->
+The cold-start difference was the most surprising result: the VM took 75.809 seconds, whereas the container started in 0.282 seconds. The VM also kept 149 guest processes and used 313 MiB RAM at idle, while the QuickNotes container had two processes and used 6.383 MiB. A VM is the better model when a complete operating system, strong isolation, or different kernel behaviour is needed; a container is well suited to stateless application services that can share the host kernel. The VM directory is also larger than the Docker image in this measurement, although the VM directory includes VirtualBox snapshot data. These measurements explain why containers became popular for stateless microservices: they start rapidly and add far less per-service operating-system overhead.
