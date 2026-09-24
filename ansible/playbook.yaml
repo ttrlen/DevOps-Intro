@@ -75,6 +75,7 @@
     - name: Ensure QuickNotes is enabled and running
       ansible.builtin.systemd:
         name: "{{ quicknotes_service_name }}"
+        daemon_reload: true
         enabled: true
         state: started
 
