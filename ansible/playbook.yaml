@@ -13,7 +13,7 @@
     listen_addr: ":8080"
     data_path: "{{ quicknotes_data_dir }}/notes.json"
     seed_path: "{{ quicknotes_data_dir }}/seed.json"
-    restart_delay: 2s
+    restart_delay: 3s
 
     configure_ansible_pull: true
     ansible_pull_repo: https://github.com/ttrlen/DevOps-Intro.git
