@@ -9,15 +9,12 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-
-	"golang.org/x/text/language"
 )
 
 func main() {
 	addr := envOrDefault("ADDR", ":8080")
 	dataPath := envOrDefault("DATA_PATH", "data/notes.json")
 	seedPath := envOrDefault("SEED_PATH", "seed.json")
-	_, _, _ = language.ParseAcceptLanguage("en-US")
 
 	if err := ensureSeeded(dataPath, seedPath); err != nil {
 		log.Fatalf("seed: %v", err)
