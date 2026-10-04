@@ -98,7 +98,7 @@ jobs:
       - name: Install govulncheck
         run: go install golang.org/x/vuln/cmd/govulncheck@v1.1.4
       - name: Check reachable vulnerabilities
-        run: "$(go env GOPATH)/bin/govulncheck" ./...
+        run: '$(go env GOPATH)/bin/govulncheck ./...'
 
   ci-ok:
     name: ci-ok
