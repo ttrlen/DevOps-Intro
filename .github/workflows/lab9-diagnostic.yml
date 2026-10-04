@@ -1,0 +1,11 @@
+name: Lab9 Actions diagnostic
+
+on:
+  push:
+    branches: [feature/lab9]
+
+jobs:
+  runner:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "GitHub Actions runner started"
