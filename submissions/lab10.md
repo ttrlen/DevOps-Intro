@@ -111,11 +111,37 @@ and benchmark command are in [`cloud/tunnel.md`](../cloud/tunnel.md). The URL
 is intentionally not stable and must be checked from a phone on cellular (or a
 different network) before it is reported.
 
+### Attempted, but blocked by the network
+
+I attempted the bonus on 2026-10-08 from both WSL and native Windows.  I
+installed `cloudflared 2026.10.0`, tried a Cloudflare DoH/DNS workaround and a
+native Windows run, then also retried with official `cloudflared 2025.11.1`.
+Quick-tunnel URLs were allocated, but none registered a usable origin
+connection, so I did not claim a public `/health` response, phone verification,
+or latency measurement.
+
+The final native-Windows diagnostic reached a healthy pre-check: DNS resolution
+for both edge regions, UDP/QUIC, TCP/HTTP2 and the Cloudflare API all reported
+`PASS`. Registration nevertheless failed immediately with:
+
+```text
+Failed to initialize DNS local resolver: lookup region1.v2.argotunnel.com: i/o timeout
+Register tunnel error from server side: context deadline exceeded
+```
+
+The 2025.11.1 retry then reported QUIC control-stream failures and
+`timeout: no recent network activity`. Earlier attempts on the university
+network also reported that outbound TCP and UDP port 7844 to the Cloudflare edge
+were blocked. This is an external network restriction, not a QuickNotes error:
+the local service remained available at `http://localhost:8080` and all Render
+checks above passed. The bonus can be repeated later from an unrestricted
+network without changing the application or release image.
+
 | Metric | Render | Cloudflare Tunnel (local via edge) |
 |---|---:|---:|
-| Warm p50 | _pending_ | _pending_ |
-| Warm p95 | _pending_ | _pending_ |
-| Cold start | _pending_ | N/A (local container stays running) |
+| Warm p50 | 0.677996 s | not measured (tunnel did not register) |
+| Warm p95 | not measured | not measured (tunnel did not register) |
+| Cold start | 12.834427–14.325977 s | N/A (local container stays running) |
 | Public URL stability | stable | ephemeral on restart |
 | Cost | free | free |
 
@@ -123,9 +149,9 @@ different network) before it is reported.
 
 | Check | Observed evidence |
 |---|---|
-| Tunnel URL | _pending: ephemeral `trycloudflare.com` URL_ |
-| Different-network `/health` request | _pending: paste phone/cellular result_ |
-| 50-run benchmark | _pending: attach/paste hyperfine output with p50 and p95_ |
+| Tunnel URL | Quick-tunnel URLs were allocated during diagnostics but never became usable; not reported as a deployment URL. |
+| Different-network `/health` request | Not performed: an origin connection was never registered. |
+| 50-run benchmark | Not performed: an origin connection was never registered. |
 
 ### Design answers
 
