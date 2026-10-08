@@ -1,8 +1,8 @@
 # Lab 10 — Cloud Computing: QuickNotes release and deployment
 
-> Evidence placeholders below are intentional until the external deployment is
-> completed. They must be replaced with actual URLs, commands and measurements;
-> no latency or public-reachability result is claimed before it is observed.
+> The remaining evidence placeholders are intentionally retained until their
+> measurements are observed. No latency, cold-start or external-network result
+> is claimed before it is measured.
 
 ## Task 1 — Git tag to GHCR
 
@@ -28,8 +28,8 @@ end-to-end `tag → push → deploy-hook` path.
 |---|---|
 | Signed tag | `v0.1.0` |
 | Green GitHub Actions run | _pending: paste run URL_ |
-| Public package URL | _pending: paste GHCR package URL after changing visibility to Public_ |
-| Clean unauthenticated pull | _pending: paste `docker pull ghcr.io/ttrlen/devops-intro/quicknotes:v0.1.0` output_ |
+| Public package URL | `https://github.com/ttrlen/DevOps-Intro/pkgs/container/devops-intro%2Fquicknotes` |
+| Clean unauthenticated pull | `docker pull ghcr.io/ttrlen/devops-intro/quicknotes:v0.1.0` succeeded; digest `sha256:31c09df5fe7fc20c9dc21322f297a7a15a05a07a15dfcf0aa2361f5e31dc9eb8`, platform `linux/amd64`. |
 
 ### Design answers
 
@@ -62,10 +62,10 @@ tag as a URL-encoded `imgURL` parameter.
 
 | Check | Observed evidence |
 |---|---|
-| Service URL | _pending: paste `https://<service>.onrender.com`_ |
-| `/health` verbose curl | _pending: paste actual `curl -v` excerpt_ |
-| Port log | _pending: paste `quicknotes listening on :10000`_ |
-| No port-detection restart | _pending: confirm from Render deploy log_ |
+| Service URL | `https://quicknotes-v0-1-0.onrender.com/` |
+| `/health` verbose curl | On 2026-10-08: `HTTP/2 200`; `content-type: application/json`; body `{"notes":4,"status":"ok"}`. TLS certificate hostname matched `quicknotes-v0-1-0.onrender.com`. |
+| Port log | `2026/10/08 18:02:53 quicknotes listening on :10000 (notes loaded: 4)` |
+| No port-detection restart | Initial deploy log reached `Your service is live` without a `New primary port detected` entry. |
 | CI hook invocation | _pending: paste green Actions-run URL_ |
 
 ### Latency and ephemeral-storage evidence
