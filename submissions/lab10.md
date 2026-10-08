@@ -26,8 +26,8 @@ end-to-end `tag → push → deploy-hook` path.
 
 | Check | Evidence to record after release |
 |---|---|
-| Signed tag | `v0.1.0` |
-| Green GitHub Actions run | _pending: paste run URL_ |
+| Signed tags | `v0.1.0` (initial image) and `v0.1.1` (CI-to-Render deploy) |
+| Green GitHub Actions run | [`v0.1.1` run #2](https://github.com/ttrlen/DevOps-Intro/actions/runs/37821921600), completed successfully on 2026-10-08. It built/pushed the `linux/amd64` image and its `Trigger Render deploy for this immutable tag` step succeeded. |
 | Public package URL | `https://github.com/ttrlen/DevOps-Intro/pkgs/container/devops-intro%2Fquicknotes` |
 | Clean unauthenticated pull | `docker pull ghcr.io/ttrlen/devops-intro/quicknotes:v0.1.0` succeeded; digest `sha256:31c09df5fe7fc20c9dc21322f297a7a15a05a07a15dfcf0aa2361f5e31dc9eb8`, platform `linux/amd64`. |
 
@@ -66,14 +66,14 @@ tag as a URL-encoded `imgURL` parameter.
 | `/health` verbose curl | On 2026-10-08: `HTTP/2 200`; `content-type: application/json`; body `{"notes":4,"status":"ok"}`. TLS certificate hostname matched `quicknotes-v0-1-0.onrender.com`. |
 | Port log | `2026/10/08 18:02:53 quicknotes listening on :10000 (notes loaded: 4)` |
 | No port-detection restart | Initial deploy log reached `Your service is live` without a `New primary port detected` entry. |
-| CI hook invocation | _pending: paste green Actions-run URL_ |
+| CI hook invocation | [`v0.1.1` Actions run #2](https://github.com/ttrlen/DevOps-Intro/actions/runs/37821921600): `Trigger Render deploy for this immutable tag` completed successfully. |
 
 ### Latency and ephemeral-storage evidence
 
 | Measurement | Result |
 |---|---:|
-| Five warm requests | _pending: record all five_ |
-| Warm p50 | _pending_ |
+| Five warm requests | 1.672334 s, 0.865970 s, 0.450243 s, 0.677996 s, 0.409233 s (2026-10-08) |
+| Warm p50 | 0.677996 s |
 | Cold request 1 after ≥20 min idle | _pending_ |
 | Cold request 2 after ≥20 min idle | _pending_ |
 | Cold request 3 after ≥20 min idle | _pending_ |
