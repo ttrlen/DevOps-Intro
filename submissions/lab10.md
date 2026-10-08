@@ -74,10 +74,10 @@ tag as a URL-encoded `imgURL` parameter.
 |---|---:|
 | Five warm requests | 1.672334 s, 0.865970 s, 0.450243 s, 0.677996 s, 0.409233 s (2026-10-08) |
 | Warm p50 | 0.677996 s |
-| Cold request 1 after ≥20 min idle | _pending_ |
-| Cold request 2 after ≥20 min idle | _pending_ |
-| Cold request 3 after ≥20 min idle | _pending_ |
-| Note after spin-down and wake | _pending: record GET `/notes` result_ |
+| Cold request 1 after ≥20 min idle | 12.834427 s; `/health` returned HTTP 200 (2026-10-08) |
+| Cold request 2 after ≥20 min idle | 13.803815 s; `/health` returned HTTP 200 (2026-10-08) |
+| Cold request 3 after ≥20 min idle | 14.325977 s; `/health` returned HTTP 200 (2026-10-08) |
+| Note after spin-down and wake | `POST /notes` created `id: 5`, title `lab10-ephemeral-check`; after the 20-minute sleep/wake, `GET /notes` contained only the four seed notes, so `id: 5` disappeared. |
 
 ### Design answers
 
