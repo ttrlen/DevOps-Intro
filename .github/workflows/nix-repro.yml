@@ -16,10 +16,16 @@ jobs:
       digest: ${{ steps.digest.outputs.digest }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@21a544727d0c62386e78b4befe52d19ad12692e3 # v17
+
+      - name: Deliberately break reproducibility (temporary evidence)
+        run: sed -i 's/1970-01-01T00:00:01Z/1970-01-01T00:00:02Z/' flake.nix
+
       - name: Build image without Docker
         run: nix build .#docker --print-build-logs
+
       - name: Record image digest
         id: digest
         run: echo "digest=$(sha256sum result | awk '{print $1}')" >> "$GITHUB_OUTPUT"
