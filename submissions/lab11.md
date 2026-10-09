@@ -133,8 +133,8 @@ environment B: c7f77abb9e55c2dfcda7999aee3a640b45d7b65428447ed190dc5722b84f0f53
 Error: Process completed with exit code 1.
 ```
 
-The temporary workflow step was removed immediately afterwards; the next run
-must be green again.
+The temporary workflow step was removed immediately afterwards in revert commit
+`72a7a59`. The restored final green check is [GitHub Actions run #37994571139](https://github.com/ttrlen/DevOps-Intro/actions/runs/37994571139).
 
 ### Design answers
 
