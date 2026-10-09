@@ -115,9 +115,16 @@ Ubuntu runners in parallel. Each pins the Nix installer action by full commit
 SHA, builds `.#docker`, and exposes the archive SHA-256 as a job output. A
 third job compares the two values and fails on any mismatch.
 
-After pushing this branch, add the resulting green and deliberately-broken red
-run URLs and their short digest/log excerpts here. They cannot truthfully be
-recorded before GitHub Actions has run them.
+The first green run is [GitHub Actions run #37992635226](https://github.com/ttrlen/DevOps-Intro/actions/runs/37992635226).
+Its comparison job reported:
+
+```text
+environment A: c7f77abb9e55c2dfcda7999aee3a640b45d7b65428447ed190dc5722b84f0f53
+environment B: c7f77abb9e55c2dfcda7999aee3a640b45d7b65428447ed190dc5722b84f0f53
+```
+
+The deliberately-broken red run URL and its mismatch excerpt will be recorded
+after the one-run CI demonstration below, before restoring the workflow.
 
 ### Design answers
 
