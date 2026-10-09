@@ -20,18 +20,23 @@ Run the following in two clean clones or fresh Nix environments:
 ```console
 $ nix build .#quicknotes
 $ nix-store --query --hash "$(readlink result)"
-# Record environment A's output here after the build.
+sha256:0g2wvs3g2djmvixzk4v898wn1fp5il8cksbn09f2cgh6yhvhpdh2
 
 $ nix build .#quicknotes
 $ nix-store --query --hash "$(readlink result)"
-# Record environment B's identical output here after the independent build.
+sha256:0g2wvs3g2djmvixzk4v898wn1fp5il8cksbn09f2cgh6yhvhpdh2
 ```
+
+The two values were produced in separately created `nixos/nix:2.30.3`
+containers, each starting with an empty Nix store.
 
 Runtime check:
 
 ```console
-$ ./result/bin/quicknotes &
+$ DATA_PATH=/tmp/quicknotes-notes.json SEED_PATH=app/seed.json ./result/bin/quicknotes &
+2026/10/09 21:49:27 quicknotes listening on :8080 (notes loaded: 4)
 $ curl --fail http://127.0.0.1:8080/health
+{"notes":4,"status":"ok"}
 ```
 
 ### Design answers
