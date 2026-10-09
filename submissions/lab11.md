@@ -94,8 +94,14 @@ size was 5.3 MiB. The Lab 6 control experiment is:
 $ docker build --no-cache -t qn-lab6:run1 ./app
 $ docker build --no-cache -t qn-lab6:run2 ./app
 $ docker images --no-trunc qn-lab6
-# Paste both distinct image IDs and the size comparison here after running it.
+REPOSITORY   TAG    IMAGE ID                                                                  SIZE
+qn-lab6      run1   sha256:8d9023566c884c0e46773deee3ee2a71a0db7702f540391887eda45aced76502   23MB
+qn-lab6      run2   sha256:b49a9ee4496e17fccfc2a845744333f3157fa8b4b4f26e917894931e94a7d44b   23MB
 ```
+
+Thus the Nix image archive is 5.3 MiB, versus 23 MB for the Lab 6 Docker
+images. Despite the same source and fixed base-image digests, the two fresh
+Docker builds produced different image IDs.
 
 ### Design answers
 
