@@ -123,8 +123,18 @@ environment A: c7f77abb9e55c2dfcda7999aee3a640b45d7b65428447ed190dc5722b84f0f53
 environment B: c7f77abb9e55c2dfcda7999aee3a640b45d7b65428447ed190dc5722b84f0f53
 ```
 
-The deliberately-broken red run URL and its mismatch excerpt will be recorded
-after the one-run CI demonstration below, before restoring the workflow.
+The deliberately-broken red run is [GitHub Actions run #37994146595](https://github.com/ttrlen/DevOps-Intro/actions/runs/37994146595).
+Only environment A temporarily rewrote the image `created` timestamp; the
+comparison job correctly failed with exit code 1:
+
+```text
+environment A: 8c5f570bb12221d2b999f77826407257194abcd8571eb67ee45702b0937458be
+environment B: c7f77abb9e55c2dfcda7999aee3a640b45d7b65428447ed190dc5722b84f0f53
+Error: Process completed with exit code 1.
+```
+
+The temporary workflow step was removed immediately afterwards; the next run
+must be green again.
 
 ### Design answers
 
